@@ -1,0 +1,17 @@
+name: fu-car-renting-system
+networks:
+  fu-car-renting-system-net:
+    driver: bridge
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672" # Port giao tiếp của code (AMQP)
+      - "${RABBITMQ_WEB_PORT:-15672}:15672" # Port của giao diện Web Management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-guest}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-guest}
+    networks:
+      - fu-car-renting-system-net
