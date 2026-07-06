@@ -10,7 +10,7 @@ spring:
     locations: classpath:db/migration
 
   datasource:
-    url: jdbc:postgresql://${RENTING_DB_HOST:localhost}:${RENTING_DB_PORT:5432}/${RENTING_DB_NAME:rental_renting_service_dbs}
+    url: jdbc:postgresql://${RENTING_DB_HOST:localhost}:${RENTING_DB_PORT:5432}/${RENTING_DB_NAME:rental_db}
     username: ${RENTING_DB_USERNAME:postgres}
     password: ${RENTING_DB_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver

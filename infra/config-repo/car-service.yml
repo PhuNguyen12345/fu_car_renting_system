@@ -11,7 +11,7 @@ spring:
     locations: classpath:db/migration
 
   datasource:
-    url: jdbc:postgresql://${CAR_DB_HOST:localhost}:${CAR_DB_PORT:5432}/${CAR_DB_NAME:rental_car_service_dbs}
+    url: jdbc:postgresql://${CAR_DB_HOST:localhost}:${CAR_DB_PORT:5432}/${CAR_DB_NAME:car_db}
     username: ${CAR_DB_USERNAME:postgres}
     password: ${CAR_DB_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver

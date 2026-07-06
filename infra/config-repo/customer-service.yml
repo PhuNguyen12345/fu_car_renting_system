@@ -11,7 +11,7 @@ spring:
     locations: classpath:db/migration
 
   datasource:
-    url: jdbc:postgresql://${CUSTOMER_DB_HOST:localhost}:${CUSTOMER_DB_PORT:5432}/${CUSTOMER_DB_NAME:rental_customer_service_dbs}
+    url: jdbc:postgresql://${CUSTOMER_DB_HOST:localhost}:${CUSTOMER_DB_PORT:5432}/${CUSTOMER_DB_NAME:customer_db}
     username: ${CUSTOMER_DB_USERNAME:postgres}
     password: ${CUSTOMER_DB_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver

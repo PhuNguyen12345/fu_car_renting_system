@@ -25,9 +25,16 @@ spring:
         - id: renting-service
           uri: lb://renting-service
           predicates:
-            - Path=/api/v1/rentings/**
+            - Path=/api/v1/rentals/**
 
         - id: notification-service
           uri: lb://notification-service
           predicates:
             - Path=/api/v1/notification/**
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
