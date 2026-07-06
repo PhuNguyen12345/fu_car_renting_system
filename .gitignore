@@ -1,0 +1,32 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.settings/
+.metadata/
+.classpath
+.project
+bin/
+
+# Environment Variables / Secrets
+.env
+.env.*
+*.local
+application-local.yml
+application-local.properties
+
+# OS generated files
+.DS_Store
+Thumbs.db

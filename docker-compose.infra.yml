@@ -11,7 +11,7 @@ services:
       - "${RABBITMQ_PORT:-5672}:5672" # Port giao tiếp của code (AMQP)
       - "${RABBITMQ_WEB_PORT:-15672}:15672" # Port của giao diện Web Management
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-guest}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-guest}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-admin}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-admin}
     networks:
       - fu-car-renting-system-net

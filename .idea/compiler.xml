@@ -6,18 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="config" />
-        <module name="gateway" />
+        <module name="notification" />
+        <module name="car" />
         <module name="eureka" />
+        <module name="config" />
+        <module name="renting" />
+        <module name="gateway" />
+        <module name="events" />
+        <module name="customer" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="car" options="-parameters" />
       <module name="config" options="-parameters" />
+      <module name="customer" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="events" options="-parameters" />
       <module name="fu_car_renting_system" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="notification" options="-parameters" />
+      <module name="renting" options="-parameters" />
     </option>
   </component>
 </project>
