@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS brands (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    logo_url VARCHAR(500)
+);
+
+CREATE TABLE IF NOT EXISTS cars (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    brand_id UUID NOT NULL REFERENCES brands(id),
+    type VARCHAR(50) NOT NULL, -- SEDAN, SUV, MPV, LUXURY
+    price_per_day DECIMAL(15,2) NOT NULL,
+    seats INTEGER NOT NULL,
+    transmission VARCHAR(50) NOT NULL, -- AUTO, MANUAL
+    fuel_type VARCHAR(50) NOT NULL, -- GASOLINE, DIESEL, ELECTRIC
+    fuel_consumption VARCHAR(50),
+    license_plate VARCHAR(50) UNIQUE NOT NULL,
+    status VARCHAR(50) NOT NULL, -- AVAILABLE, LOCKED_PENDING, RENTED, MAINTENANCE
+    description TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS car_images (
+    id UUID PRIMARY KEY,
+    car_id UUID NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+    image_url VARCHAR(500) NOT NULL,
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS car_features (
+    car_id UUID NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+    feature_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (car_id, feature_name)
+);
