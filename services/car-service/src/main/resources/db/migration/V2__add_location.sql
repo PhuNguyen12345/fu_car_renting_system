@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS locations (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    address VARCHAR(500) NOT NULL
+);
+
+ALTER TABLE cars ADD COLUMN location_id UUID REFERENCES locations(id);

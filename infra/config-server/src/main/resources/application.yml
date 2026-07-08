@@ -9,7 +9,7 @@ spring:
       server:
         git:
           uri: https://github.com/PhuNguyen12345/fu_car_renting_system.git
-          default-label: ${CONFIG_BRANCH:main}
+          default-label: ${CONFIG_BRANCH:master}
           search-paths: infra/config-repo
 
 eureka:

@@ -1,0 +1,4 @@
+# Trong Config Repo -> application.yml (File Global)
+app:
+  jwtSecret: ${JWT_SECRET:FPTCarRentingSecretKeyDungDeKyTokenPhaiDuDaiDeBaoMat2026}
+  jwtExpirationMs: 86400000 # 24 giờ

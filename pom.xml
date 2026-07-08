@@ -29,6 +29,7 @@
         <module>services/renting-service</module>
         <module>services/notification-service</module>
         <module>shared/common-events</module>
+        <module>shared/common-security</module>
     </modules>
 
     <dependencyManagement>
