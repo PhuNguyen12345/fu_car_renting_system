@@ -2,9 +2,11 @@ package com.mss301.car.api.controller;
 
 import com.mss301.car.api.dto.LocationDto;
 import com.mss301.car.api.dto.LocationRequestDto;
+import com.mss301.car.api.dto.UpdateLocationRequestDto;
 import com.mss301.car.application.usecase.CreateLocationUseCase;
 import com.mss301.car.application.usecase.DeleteLocationUseCase;
 import com.mss301.car.application.usecase.GetLocationListUseCase;
+import com.mss301.car.application.usecase.GetLocationUseCase;
 import com.mss301.car.application.usecase.UpdateLocationUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class LocationAdminController {
 
     private final GetLocationListUseCase getLocationListUseCase;
+    private final GetLocationUseCase getLocationUseCase;
     private final CreateLocationUseCase createLocationUseCase;
     private final UpdateLocationUseCase updateLocationUseCase;
     private final DeleteLocationUseCase deleteLocationUseCase;
@@ -31,15 +34,20 @@ public class LocationAdminController {
         return ResponseEntity.ok(getLocationListUseCase.execute());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<LocationDto> getLocation(@PathVariable UUID id) {
+        return ResponseEntity.ok(getLocationUseCase.execute(id));
+    }
+
     @PostMapping
     public ResponseEntity<LocationDto> createLocation(@Valid @RequestBody LocationRequestDto request) {
         return ResponseEntity.ok(createLocationUseCase.execute(request));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<LocationDto> updateLocation(
             @PathVariable UUID id,
-            @Valid @RequestBody LocationRequestDto request) {
+            @RequestBody UpdateLocationRequestDto request) {
         return ResponseEntity.ok(updateLocationUseCase.execute(id, request));
     }
 

@@ -2,6 +2,7 @@ package com.mss301.car.api.controller;
 
 import com.mss301.car.api.dto.AdminCarSearchCriteria;
 import com.mss301.car.api.dto.CarDto;
+import com.mss301.car.api.dto.CarDetailDto;
 import com.mss301.car.api.dto.CreateCarDto;
 import com.mss301.car.api.dto.UpdateCarDto;
 import com.mss301.car.api.dto.UpdateCarStatusDto;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class CarAdminController {
 
     private final GetAdminCarListUseCase getAdminCarListUseCase;
+    private final GetCarDetailUseCase getCarDetailUseCase;
     private final CreateCarUseCase createCarUseCase;
     private final UpdateCarUseCase updateCarUseCase;
     private final ChangeCarStatusUseCase changeCarStatusUseCase;
@@ -33,13 +35,18 @@ public class CarAdminController {
         return ResponseEntity.ok(getAdminCarListUseCase.execute(criteria, pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CarDetailDto> getCarDetailForAdmin(@PathVariable UUID id) {
+        return ResponseEntity.ok(getCarDetailUseCase.execute(id));
+    }
+
     @PostMapping
     public ResponseEntity<Void> createCar(@RequestBody CreateCarDto dto) {
         createCarUseCase.execute(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> updateCar(@PathVariable UUID id, @RequestBody UpdateCarDto dto) {
         updateCarUseCase.execute(id, dto);
         return ResponseEntity.ok().build();
