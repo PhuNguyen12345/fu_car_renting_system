@@ -5,6 +5,7 @@ import com.mss301.car.api.dto.CarDto;
 import com.mss301.car.api.dto.CreateCarDto;
 import com.mss301.car.api.dto.UpdateCarDto;
 import com.mss301.car.api.dto.UpdateCarStatusDto;
+import com.mss301.car.api.dto.CloudinarySignatureDto;
 import com.mss301.car.application.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ public class CarAdminController {
     private final ChangeCarStatusUseCase changeCarStatusUseCase;
     private final DeleteCarUseCase deleteCarUseCase;
     private final RestoreCarUseCase restoreCarUseCase;
+    private final GenerateCloudinarySignatureUseCase generateCloudinarySignatureUseCase;
 
     @GetMapping
     public ResponseEntity<Page<CarDto>> getAllCarsForAdmin(AdminCarSearchCriteria criteria, Pageable pageable) {
@@ -59,5 +61,10 @@ public class CarAdminController {
     public ResponseEntity<Void> restoreCar(@PathVariable UUID id) {
         restoreCarUseCase.execute(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/cloudinary-signature")
+    public ResponseEntity<CloudinarySignatureDto> getCloudinarySignature() {
+        return ResponseEntity.ok(generateCloudinarySignatureUseCase.execute());
     }
 }

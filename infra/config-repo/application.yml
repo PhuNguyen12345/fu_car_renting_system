@@ -2,3 +2,8 @@
 app:
   jwtSecret: ${JWT_SECRET:FPTCarRentingSecretKeyDungDeKyTokenPhaiDuDaiDeBaoMat2026}
   jwtExpirationMs: 86400000 # 24 giờ
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}

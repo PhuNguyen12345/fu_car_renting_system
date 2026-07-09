@@ -1,0 +1,4 @@
+INSERT INTO users (id, email, password_hash, full_name, phone, date_of_birth, cccd, status, role, created_at, updated_at) VALUES 
+('a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d', 'admin@fpt.edu.vn', '$2a$10$0K8d8Jyb0YDepEtgPMgXGOFGr9cfZ4dzWSgDMqs7bm5nm0ifZS7eG', 'Quản trị viên', '0999999999', '1990-01-01', '000000000000', 'ACTIVE', 'ADMIN', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('11111111-2222-3333-4444-555555555555', 'phuna@fpt.edu.vn', '$2a$10$0K8d8Jyb0YDepEtgPMgXGOFGr9cfZ4dzWSgDMqs7bm5nm0ifZS7eG', 'Nguyễn An Phú', '0987654321', '2005-08-15', '001202001234', 'ACTIVE', 'CUSTOMER', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('22222222-3333-4444-5555-666666666666', 'an.nguyen@fpt.edu.vn', '$2a$10$0K8d8Jyb0YDepEtgPMgXGOFGr9cfZ4dzWSgDMqs7bm5nm0ifZS7eG', 'Nguyễn Văn An', '0123456789', '2002-12-01', '001202005678', 'ACTIVE', 'CUSTOMER', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

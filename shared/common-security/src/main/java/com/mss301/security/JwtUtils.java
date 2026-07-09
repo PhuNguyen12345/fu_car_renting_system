@@ -15,6 +15,9 @@ public class JwtUtils {
     @Value("${jwt.secret:defaultSecretKeyLongEnoughForHmacSha256ToWorkProperly1234567890}")
     private String jwtSecret;
 
+    @Value("${jwt.expirationMs:86400000}")
+    private int jwtExpirationMs;
+
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -44,5 +47,16 @@ public class JwtUtils {
     public Claims getClaimsFromJwtToken(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
                 .parseClaimsJws(token).getBody();
+    }
+
+    public String generateToken(String email, String role, String customerId) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("role", role)
+                .claim("id", customerId)
+                .setIssuedAt(new java.util.Date())
+                .setExpiration(new java.util.Date((new java.util.Date()).getTime() + jwtExpirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 }
