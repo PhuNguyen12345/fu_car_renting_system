@@ -15,7 +15,7 @@ spring:
         - id: car-service
           uri: lb://car-service
           predicates:
-            - Path=/api/v1/admin/cars/**, /api/v1/public/cars/**, /api/v1/public/brands/**, /api/v1/public/locations/**
+            - Path=/api/v1/admin/cars/**, /api/v1/admin/locations/**, /api/v1/public/cars/**, /api/v1/public/brands/**, /api/v1/public/locations/**
 
         - id: customer-service
           uri: lb://customer-service
