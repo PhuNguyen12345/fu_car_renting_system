@@ -22,4 +22,14 @@ public class LocationRepositoryImpl implements ILocationRepository {
     public Optional<Location> findById(UUID id) {
         return repository.findById(id);
     }
+
+    @Override
+    public Location save(Location location) {
+        return repository.save(location);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        repository.deleteById(id);
+    }
 }

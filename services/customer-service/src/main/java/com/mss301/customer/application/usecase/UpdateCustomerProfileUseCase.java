@@ -20,7 +20,12 @@ public class UpdateCustomerProfileUseCase {
 
         if (dto.getFullName() != null) customer.setFullName(dto.getFullName());
         if (dto.getPhone() != null) customer.setPhone(dto.getPhone());
-        if (dto.getDateOfBirth() != null) customer.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getDateOfBirth() != null) {
+            if (java.time.Period.between(dto.getDateOfBirth(), java.time.LocalDate.now()).getYears() < 18) {
+                throw new IllegalArgumentException("Bạn phải đủ 18 tuổi để sử dụng dịch vụ thuê xe");
+            }
+            customer.setDateOfBirth(dto.getDateOfBirth());
+        }
         if (dto.getCccd() != null) customer.setCccd(dto.getCccd());
         if (dto.getCccdUrl() != null) customer.setCccdUrl(dto.getCccdUrl());
         if (dto.getGplxNumber() != null) customer.setGplxNumber(dto.getGplxNumber());

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class BanCustomerUseCase {
+public class RestoreCustomerUseCase {
 
     private final ICustomerRepository customerRepository;
 
@@ -20,11 +20,11 @@ public class BanCustomerUseCase {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy khách hàng với ID: " + customerId));
 
-        if (customer.getStatus() == CustomerStatus.ACTIVE) {
-            customer.setStatus(CustomerStatus.LOCKED);
-            customer.setAdminNote("Bị khóa bởi Admin");
+        if (customer.getStatus() == CustomerStatus.LOCKED) {
+            customer.setStatus(CustomerStatus.ACTIVE);
+            customer.setAdminNote(null);
         } else {
-            throw new IllegalArgumentException("Khách hàng đã bị khóa");
+            throw new IllegalArgumentException("Khách hàng đang ở trạng thái hoạt động");
         }
 
         customerRepository.save(customer);

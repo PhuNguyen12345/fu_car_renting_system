@@ -31,7 +31,7 @@ public class LoginUseCase {
         }
 
         // Generate JWT Token
-        String token = jwtUtils.generateToken(customer.getEmail(), "ROLE_" + customer.getRole().name(), customer.getId().toString());
+        String token = jwtUtils.generateToken(customer.getEmail(), customer.getRole().name(), customer.getId().toString());
 
         return AuthResponseDto.builder()
                 .token(token)

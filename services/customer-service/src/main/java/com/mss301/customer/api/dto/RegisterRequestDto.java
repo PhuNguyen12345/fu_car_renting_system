@@ -6,7 +6,7 @@ import lombok.Data;
 public class RegisterRequestDto {
     private String email;
     private String password;
+    private String confirmPassword;
     private String fullName;
-    private String phone;
-    private String cccd;
+    private java.time.LocalDate dateOfBirth;
 }

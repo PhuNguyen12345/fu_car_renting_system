@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface ILocationRepository {
     List<Location> findAll();
     Optional<Location> findById(UUID id);
+    Location save(Location location);
+    void deleteById(UUID id);
 }

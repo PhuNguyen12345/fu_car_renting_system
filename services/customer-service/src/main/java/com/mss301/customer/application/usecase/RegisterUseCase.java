@@ -23,12 +23,23 @@ public class RegisterUseCase {
             throw new IllegalArgumentException("Email đã tồn tại trong hệ thống");
         }
 
+        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+            throw new IllegalArgumentException("Mật khẩu xác nhận không khớp");
+        }
+
+        if (dto.getDateOfBirth() == null) {
+            throw new IllegalArgumentException("Ngày sinh không được để trống");
+        }
+        
+        if (java.time.Period.between(dto.getDateOfBirth(), java.time.LocalDate.now()).getYears() < 18) {
+            throw new IllegalArgumentException("Bạn phải đủ 18 tuổi để sử dụng dịch vụ thuê xe");
+        }
+
         Customer newCustomer = Customer.builder()
                 .email(dto.getEmail())
                 .passwordHash(passwordEncoder.encode(dto.getPassword()))
                 .fullName(dto.getFullName())
-                .phone(dto.getPhone())
-                .cccd(dto.getCccd())
+                .dateOfBirth(dto.getDateOfBirth())
                 .role(CustomerRole.CUSTOMER) // Default role for new signups
                 .status(CustomerStatus.ACTIVE)
                 .build();

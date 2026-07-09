@@ -33,13 +33,13 @@ public class Customer {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column
     private String phone;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Column(nullable = false)
+    @Column
     private String cccd;
 
     @Column(name = "cccd_url")

@@ -37,9 +37,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = claims.getSubject();
                 // Assumes your JWT includes a "role" claim (e.g., "CUSTOMER" or "ADMIN")
                 String role = claims.get("role", String.class);
+                if (role != null) {
+                    if (!role.toUpperCase().startsWith("ROLE_")) {
+                        role = "ROLE_" + role.toUpperCase();
+                    } else {
+                        role = role.toUpperCase();
+                    }
+                }
                 
                 List<GrantedAuthority> authorities = role != null 
-                        ? List.of(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase())) 
+                        ? List.of(new SimpleGrantedAuthority(role)) 
                         : Collections.emptyList();
 
                 UsernamePasswordAuthenticationToken authentication = 
