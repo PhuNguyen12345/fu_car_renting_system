@@ -19,7 +19,7 @@ public class BookingRepositoryImpl implements IBookingRepository {
 
     @Override
     public Booking save(Booking booking) {
-        return repository.save(booking);
+        return repository.saveAndFlush(booking);
     }
 
     @Override
