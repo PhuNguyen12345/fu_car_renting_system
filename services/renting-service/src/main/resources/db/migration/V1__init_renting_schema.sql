@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS bookings (
     renter_name VARCHAR(255) NOT NULL,
     renter_phone VARCHAR(50) NOT NULL,
     renter_cccd VARCHAR(50) NOT NULL,
+    renter_license VARCHAR(50) NOT NULL,
+    customer_note TEXT,
     admin_note TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

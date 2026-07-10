@@ -33,7 +33,7 @@ public class CommonSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 // Allow public endpoints
-                .requestMatchers("/api/v1/auth/**", "/api/v1/public/**", "/actuator/**", "/error").permitAll()
+                .requestMatchers("/api/v1/auth/**", "/api/v1/public/**", "/api/v1/internal/**", "/actuator/**", "/error").permitAll()
                 // You can customize these matchers per-service later if needed,
                 // or just secure everything else by default
                 .anyRequest().authenticated()
