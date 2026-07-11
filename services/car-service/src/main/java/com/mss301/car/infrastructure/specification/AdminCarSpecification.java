@@ -13,8 +13,7 @@ public class AdminCarSpecification {
     public static Specification<Car> buildQuery(AdminCarSearchCriteria criteria) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            // Admin không thấy xe bị soft delete
-            predicates.add(criteriaBuilder.isNull(root.get("deletedAt")));
+            // Admin có thể thấy mọi xe, kể cả xe bị xoá mềm
 
             if (criteria == null) {
                 return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

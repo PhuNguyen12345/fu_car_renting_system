@@ -16,6 +16,7 @@ import java.util.UUID;
 public class CarDto {
     private UUID id;
     private String name;
+    private UUID brandId;
     private String brandName;
     private String type;
     private BigDecimal pricePerDay;
@@ -23,8 +24,10 @@ public class CarDto {
     private String transmission;
     private String fuelType;
     private String status;
+    private String licensePlate;
 
     private String imageUrl;
+    private UUID locationId;
     private String locationName;
     private String city;
 
@@ -39,6 +42,7 @@ public class CarDto {
         return CarDto.builder()
                 .id(car.getId())
                 .name(car.getName())
+                .brandId(car.getBrand() != null ? car.getBrand().getId() : null)
                 .brandName(car.getBrand() != null ? car.getBrand().getName() : null)
                 .type(car.getType())
                 .pricePerDay(car.getPricePerDay())
@@ -46,7 +50,9 @@ public class CarDto {
                 .transmission(car.getTransmission())
                 .fuelType(car.getFuelType())
                 .status(car.getStatus().name())
+                .licensePlate(car.getLicensePlate())
                 .imageUrl(primaryImage)
+                .locationId(car.getLocation() != null ? car.getLocation().getId() : null)
                 .locationName(car.getLocation() != null ? car.getLocation().getName() : null)
                 .city(car.getLocation() != null ? car.getLocation().getCity() : null)
                 .build();

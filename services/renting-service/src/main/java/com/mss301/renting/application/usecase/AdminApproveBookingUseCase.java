@@ -24,6 +24,7 @@ public class AdminApproveBookingUseCase {
         }
 
         booking.setBookingStatus(BookingStatus.APPROVED);
+        booking.setPaymentStatus(com.mss301.renting.domain.vo.PaymentStatus.FULLY_PAID);
         return BookingDto.fromEntity(bookingRepository.save(booking));
     }
 }

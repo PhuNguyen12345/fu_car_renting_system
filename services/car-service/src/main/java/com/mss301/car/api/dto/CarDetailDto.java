@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class CarDetailDto {
     private UUID id;
     private String name;
+    private UUID brandId;
     private String brandName;
     private String brandLogo;
     private String type;
@@ -25,6 +26,7 @@ public class CarDetailDto {
     private String licensePlate;
     private String status;
     private String description;
+    private UUID locationId;
     private String locationName;
     private String city;
     private String address;
@@ -42,6 +44,7 @@ public class CarDetailDto {
         return CarDetailDto.builder()
                 .id(car.getId())
                 .name(car.getName())
+                .brandId(car.getBrand() != null ? car.getBrand().getId() : null)
                 .brandName(car.getBrand() != null ? car.getBrand().getName() : null)
                 .brandLogo(car.getBrand() != null ? car.getBrand().getLogoUrl() : null)
                 .type(car.getType())
@@ -53,6 +56,7 @@ public class CarDetailDto {
                 .licensePlate(car.getLicensePlate())
                 .status(car.getStatus().name())
                 .description(car.getDescription())
+                .locationId(car.getLocation() != null ? car.getLocation().getId() : null)
                 .locationName(car.getLocation() != null ? car.getLocation().getName() : null)
                 .city(car.getLocation() != null ? car.getLocation().getCity() : null)
                 .address(car.getLocation() != null ? car.getLocation().getAddress() : null)
