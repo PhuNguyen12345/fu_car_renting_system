@@ -1,20 +1,23 @@
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(255) NOT NULL,
-    phone VARCHAR(50) NOT NULL,
-    date_of_birth DATE,
-    cccd VARCHAR(50) NOT NULL,
-    cccd_url VARCHAR(500),
-    gplx_number VARCHAR(50),
-    address VARCHAR(255),
-    avatar_url VARCHAR(500),
-    gplx_url VARCHAR(500),
-    status VARCHAR(20) NOT NULL, -- ACTIVE, LOCKED
-    role VARCHAR(20) NOT NULL, -- CUSTOMER, ADMIN
-    admin_note TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP
+CREATE TABLE users (
+                       id uuid NOT NULL,
+                       email character varying(255) NOT NULL,
+                       password_hash character varying(255) NOT NULL,
+                       full_name character varying(255) NOT NULL,
+                       phone character varying(50),
+                       date_of_birth date,
+                       cccd character varying(50),
+                       cccd_url character varying(500),
+                       gplx_number character varying(50),
+                       address character varying(255),
+                       avatar_url character varying(500),
+                       gplx_url character varying(500),
+                       status character varying(20) NOT NULL,
+                       role character varying(20) NOT NULL,
+                       admin_note text,
+                       created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                       updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                       deleted_at timestamp without time zone
 );
+
+ALTER TABLE ONLY users ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY users ADD CONSTRAINT users_email_key UNIQUE (email);

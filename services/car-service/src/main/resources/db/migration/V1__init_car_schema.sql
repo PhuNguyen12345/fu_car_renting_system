@@ -1,36 +1,57 @@
-CREATE TABLE IF NOT EXISTS brands (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    logo_url VARCHAR(500)
+CREATE TABLE brands (
+                        id uuid NOT NULL,
+                        name character varying(255) NOT NULL,
+                        logo_url character varying(500)
 );
 
-CREATE TABLE IF NOT EXISTS cars (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    brand_id UUID NOT NULL REFERENCES brands(id),
-    type VARCHAR(50) NOT NULL, -- SEDAN, SUV, MPV, LUXURY
-    price_per_day DECIMAL(15,2) NOT NULL,
-    seats INTEGER NOT NULL,
-    transmission VARCHAR(50) NOT NULL, -- AUTO, MANUAL
-    fuel_type VARCHAR(50) NOT NULL, -- GASOLINE, DIESEL, ELECTRIC
-    fuel_consumption VARCHAR(50),
-    license_plate VARCHAR(50) UNIQUE NOT NULL,
-    status VARCHAR(50) NOT NULL, -- AVAILABLE, LOCKED_PENDING, RENTED, MAINTENANCE
-    description TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP
+CREATE TABLE locations (
+                           id uuid NOT NULL,
+                           name character varying(255) NOT NULL,
+                           city character varying(100) NOT NULL,
+                           address character varying(500) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS car_images (
-    id UUID PRIMARY KEY,
-    car_id UUID NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
-    image_url VARCHAR(500) NOT NULL,
-    is_primary BOOLEAN NOT NULL DEFAULT FALSE
+CREATE TABLE cars (
+                      id uuid NOT NULL,
+                      name character varying(255) NOT NULL,
+                      brand_id uuid NOT NULL,
+                      type character varying(50) NOT NULL,
+                      price_per_day numeric(15,2) NOT NULL,
+                      seats integer NOT NULL,
+                      transmission character varying(50) NOT NULL,
+                      fuel_type character varying(50) NOT NULL,
+                      fuel_consumption character varying(50),
+                      license_plate character varying(50) NOT NULL,
+                      status character varying(50) NOT NULL,
+                      description text,
+                      created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                      updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                      deleted_at timestamp without time zone,
+                      location_id uuid,
+                      version bigint DEFAULT 0
 );
 
-CREATE TABLE IF NOT EXISTS car_features (
-    car_id UUID NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
-    feature_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (car_id, feature_name)
+CREATE TABLE car_images (
+                            id uuid NOT NULL,
+                            car_id uuid NOT NULL,
+                            image_url character varying(500) NOT NULL,
+                            is_primary boolean DEFAULT false NOT NULL
 );
+
+CREATE TABLE car_features (
+                              car_id uuid NOT NULL,
+                              feature_name character varying(255) NOT NULL
+);
+
+ALTER TABLE ONLY brands ADD CONSTRAINT brands_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY locations ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY cars ADD CONSTRAINT cars_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY car_images ADD CONSTRAINT car_images_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY car_features ADD CONSTRAINT car_features_pkey PRIMARY KEY (car_id, feature_name);
+
+ALTER TABLE ONLY cars ADD CONSTRAINT cars_license_plate_key UNIQUE (license_plate);
+
+ALTER TABLE ONLY cars ADD CONSTRAINT cars_brand_id_fkey FOREIGN KEY (brand_id) REFERENCES brands(id);
+ALTER TABLE ONLY cars ADD CONSTRAINT cars_location_id_fkey FOREIGN KEY (location_id) REFERENCES locations(id);
+ALTER TABLE ONLY car_images ADD CONSTRAINT car_images_car_id_fkey FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE;
+ALTER TABLE ONLY car_features ADD CONSTRAINT car_features_car_id_fkey FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE;
