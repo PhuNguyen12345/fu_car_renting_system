@@ -34,3 +34,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+payos:
+  client-id: ${PAYOS_CLIENT_ID:replace_with_client_id}
+  api-key: ${PAYOS_API_KEY:replace_with_api_key}
+  checksum-key: ${PAYOS_CHECKSUM_KEY:replace_with_checksum_key}
