@@ -36,7 +36,7 @@ spring:
         - id: renting-service
           uri: lb://renting-service
           predicates:
-            - Path=/api/v1/rentals/**, /api/v1/admin/rentals/**
+            - Path=/api/v1/rentals/**, /api/v1/admin/rentals/**, /api/v1/payments/**
 
         - id: notification-service
           uri: lb://notification-service
