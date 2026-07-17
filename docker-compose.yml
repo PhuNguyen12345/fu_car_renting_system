@@ -1,0 +1,223 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${CAR_DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${CAR_DB_PASSWORD:-1234}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    networks:
+      - fucar_net
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fucar_net
+
+  eureka-server:
+    build:
+      context: .
+      dockerfile: infra/eureka-server/Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_HOST=eureka-server
+    networks:
+      - fucar_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8761"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  config-server:
+    build:
+      context: .
+      dockerfile: infra/config-server/Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+      - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:/app/config-repo
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+    volumes:
+      - ./infra/config-repo:/app/config-repo
+    networks:
+      - fucar_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8888/api-gateway/default"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: infra/api-gateway/Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=config-server
+    networks:
+      - fucar_net
+
+  customer-service:
+    build:
+      context: .
+      dockerfile: services/customer-service/Dockerfile
+    container_name: customer-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres_db:
+        condition: service_started
+    environment:
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=config-server
+      - CUSTOMER_DB_HOST=postgres_db
+      - CUSTOMER_DB_PORT=5432
+      - CUSTOMER_DB_USERNAME=${CUSTOMER_DB_USERNAME:-postgres}
+      - CUSTOMER_DB_PASSWORD=${CUSTOMER_DB_PASSWORD:-1234}
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    networks:
+      - fucar_net
+
+  car-service:
+    build:
+      context: .
+      dockerfile: services/car-service/Dockerfile
+    container_name: car-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres_db:
+        condition: service_started
+    environment:
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=config-server
+      - CAR_DB_HOST=postgres_db
+      - CAR_DB_PORT=5432
+      - CAR_DB_USERNAME=${CAR_DB_USERNAME:-postgres}
+      - CAR_DB_PASSWORD=${CAR_DB_PASSWORD:-1234}
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    networks:
+      - fucar_net
+
+  renting-service:
+    build:
+      context: .
+      dockerfile: services/renting-service/Dockerfile
+    container_name: renting-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres_db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    environment:
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=config-server
+      - RENTING_DB_HOST=postgres_db
+      - RENTING_DB_PORT=5432
+      - RENTING_DB_USERNAME=${RENTING_DB_USERNAME:-postgres}
+      - RENTING_DB_PASSWORD=${RENTING_DB_PASSWORD:-1234}
+      - RABBITMQ_HOST=rabbitmq
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    networks:
+      - fucar_net
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification-service/Dockerfile
+    container_name: notification-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      postgres_db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    environment:
+      - EUREKA_HOST=eureka-server
+      - EUREKA_PORT=8761
+      - CONFIG_HOST=config-server
+      - NOTIFICATION_DB_HOST=postgres_db
+      - NOTIFICATION_DB_PORT=5432
+      - NOTIFICATION_DB_USERNAME=${CAR_DB_USERNAME:-postgres}
+      - NOTIFICATION_DB_PASSWORD=${CAR_DB_PASSWORD:-1234}
+      - RABBITMQ_HOST=rabbitmq
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    networks:
+      - fucar_net
+
+networks:
+  fucar_net:
+    driver: bridge

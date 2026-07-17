@@ -10,7 +10,7 @@ spring:
     locations: classpath:db/migration
 
   datasource:
-    url: jdbc:postgresql://${RENTING_DB_HOST:localhost}:${RENTING_DB_PORT:5432}/${RENTING_DB_NAME:rental_db}
+    url: jdbc:postgresql://${RENTING_DB_HOST:localhost}:${RENTING_DB_PORT:5432}/${RENTING_DB_NAME:renting_db}
     username: ${RENTING_DB_USERNAME:postgres}
     password: ${RENTING_DB_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
@@ -33,4 +33,4 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
