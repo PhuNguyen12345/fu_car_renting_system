@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mss301</groupId>
-    <artifactId>fu_car_renting_system</artifactId>
+    <artifactId>fu_car_renting_system_he191790</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <name>FU Car Renting System</name>
+    <name>FU Car Renting System - HE191790</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

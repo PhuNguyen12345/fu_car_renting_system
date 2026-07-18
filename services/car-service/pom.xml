@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.mss301</groupId>
-		<artifactId>fu_car_renting_system</artifactId>
+		<artifactId>fu_car_renting_system_he191790</artifactId>
 		<version>1.0</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>

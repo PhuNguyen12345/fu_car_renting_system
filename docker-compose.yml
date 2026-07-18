@@ -1,3 +1,4 @@
+name: fu_car_renting_system_he191790
 version: '3.8'
 
 services:
@@ -5,8 +6,8 @@ services:
     image: postgres:15-alpine
     container_name: postgres_db
     environment:
-      POSTGRES_USER: ${CUSTOMER_DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${CUSTOMER_DB_PASSWORD:-1234}
+      POSTGRES_USER: ${CUSTOMER_DB_USERNAME:-root}
+      POSTGRES_PASSWORD: ${CUSTOMER_DB_PASSWORD:-root}
       CUSTOMER_DB_NAME: ${CUSTOMER_DB_NAME:-customer_db}
       CAR_DB_NAME: ${CAR_DB_NAME:-car_db}
       RENTING_DB_NAME: ${RENTING_DB_NAME:-renting_db}
@@ -121,8 +122,8 @@ services:
       - CUSTOMER_DB_HOST=postgres_db
       - CUSTOMER_DB_PORT=5432
       - CUSTOMER_DB_NAME=${CUSTOMER_DB_NAME:-customer_db}
-      - CUSTOMER_DB_USERNAME=${CUSTOMER_DB_USERNAME:-postgres}
-      - CUSTOMER_DB_PASSWORD=${CUSTOMER_DB_PASSWORD:-1234}
+      - CUSTOMER_DB_USERNAME=${CUSTOMER_DB_USERNAME:-root}
+      - CUSTOMER_DB_PASSWORD=${CUSTOMER_DB_PASSWORD:-root}
     deploy:
       resources:
         limits:
@@ -151,8 +152,8 @@ services:
       - CAR_DB_HOST=postgres_db
       - CAR_DB_PORT=5432
       - CAR_DB_NAME=${CAR_DB_NAME:-car_db}
-      - CAR_DB_USERNAME=${CAR_DB_USERNAME:-postgres}
-      - CAR_DB_PASSWORD=${CAR_DB_PASSWORD:-1234}
+      - CAR_DB_USERNAME=${CAR_DB_USERNAME:-root}
+      - CAR_DB_PASSWORD=${CAR_DB_PASSWORD:-root}
     deploy:
       resources:
         limits:
@@ -182,9 +183,9 @@ services:
       - CONFIG_HOST=config-server
       - RENTING_DB_HOST=postgres_db
       - RENTING_DB_PORT=5432
-      - RENTING_DB_NAME=${RENTING_DB_NAME:-renting_db}
-      - RENTING_DB_USERNAME=${RENTING_DB_USERNAME:-postgres}
-      - RENTING_DB_PASSWORD=${RENTING_DB_PASSWORD:-1234}
+      - RENTING_DB_NAME=${RENTING_DB_NAME:-rental_db}
+      - RENTING_DB_USERNAME=${RENTING_DB_USERNAME:-root}
+      - RENTING_DB_PASSWORD=${RENTING_DB_PASSWORD:-root}
       - RABBITMQ_HOST=rabbitmq
     deploy:
       resources:
@@ -216,8 +217,8 @@ services:
       - NOTIFICATION_DB_HOST=postgres_db
       - NOTIFICATION_DB_PORT=5432
       - NOTIFICATION_DB_NAME=${NOTIFICATION_DB_NAME:-notification_db}
-      - NOTIFICATION_DB_USERNAME=${NOTIFICATION_DB_USERNAME:-postgres}
-      - NOTIFICATION_DB_PASSWORD=${NOTIFICATION_DB_PASSWORD:-1234}
+      - NOTIFICATION_DB_USERNAME=${NOTIFICATION_DB_USERNAME:-root}
+      - NOTIFICATION_DB_PASSWORD=${NOTIFICATION_DB_PASSWORD:-root}
       - RABBITMQ_HOST=rabbitmq
     deploy:
       resources:

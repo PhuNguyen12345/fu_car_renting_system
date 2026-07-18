@@ -12,5 +12,5 @@ EOSQL
 # Đọc tên DB từ biến môi trường, fallback về tên mặc định nếu không có
 create_database "${CUSTOMER_DB_NAME:-customer_db}" || true
 create_database "${CAR_DB_NAME:-car_db}" || true
-create_database "${RENTING_DB_NAME:-renting_db}" || true
+create_database "${RENTING_DB_NAME:-rental_db}" || true
 create_database "${NOTIFICATION_DB_NAME:-notification_db}" || true
